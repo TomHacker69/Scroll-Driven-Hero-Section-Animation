@@ -35,18 +35,21 @@ export default function HeroSection() {
     const valueAdd = valueAddRef.current;
     const boxes = [box1Ref.current, box2Ref.current, box3Ref.current, box4Ref.current];
 
-    let valueRect = valueAdd.getBoundingClientRect();
-    let letterOffsets = letters.map((l) => l?.offsetLeft || 0);
+    let roadRect = roadRef.current.getBoundingClientRect();
+    let letterPositions = [];
     let roadWidth = window.innerWidth;
     let carWidth = car?.offsetWidth || 180;
     let endX = roadWidth - carWidth;
 
     const calculate = () => {
-      valueRect = valueAdd.getBoundingClientRect();
-      letterOffsets = letters.map((l) => l?.offsetLeft || 0);
+      roadRect = roadRef.current.getBoundingClientRect();
       roadWidth = window.innerWidth;
       carWidth = car?.offsetWidth || 180;
       endX = roadWidth - carWidth;
+      letterPositions = letters.map((l) => {
+        if (!l) return 0;
+        return l.getBoundingClientRect().left - roadRect.left;
+      });
     };
 
     // Initial Load Animation
@@ -80,14 +83,14 @@ export default function HeroSection() {
       x: () => endX,
       ease: 'none',
       onUpdate: () => {
-        const carX = gsap.getProperty(car, 'x') + (carWidth * 0.55);
+        const carX = gsap.getProperty(car, 'x') || 0;
+        const carFront = carX + (carWidth * 0.6);
         letters.forEach((letter, i) => {
           if (!letter) return;
-          const letterX = valueRect.left + letterOffsets[i];
-          letter.style.opacity = carX >= letterX ? '1' : '0.15';
+          letter.style.opacity = carFront >= letterPositions[i] ? '1' : '0.15';
         });
         if (trail) {
-          gsap.set(trail, { width: carX });
+          gsap.set(trail, { width: carX + (carWidth * 0.3) });
         }
       },
     });

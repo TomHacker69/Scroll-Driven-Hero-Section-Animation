@@ -25,18 +25,22 @@
   const box4 = document.getElementById('box4');
   const boxes = [box1, box2, box3, box4];
 
-  let valueRect = valueAdd.getBoundingClientRect();
-  let letterOffsets = letters.map((letter) => letter.offsetLeft);
+  const road = document.getElementById('road');
+  let roadRect = road.getBoundingClientRect();
+  let letterPositions = [];
   let roadWidth = window.innerWidth;
   let carWidth = car.offsetWidth || 180;
   let endX = roadWidth - carWidth;
 
   function calculateDimensions() {
-    valueRect = valueAdd.getBoundingClientRect();
-    letterOffsets = letters.map((letter) => letter.offsetLeft);
+    roadRect = road.getBoundingClientRect();
     roadWidth = window.innerWidth;
     carWidth = car.offsetWidth || 180;
     endX = roadWidth - carWidth;
+    letterPositions = letters.map((letter) => {
+      const rect = letter.getBoundingClientRect();
+      return rect.left - roadRect.left;
+    });
   }
 
   // 1. Initial Load Animation (Requirement #2)
@@ -82,12 +86,12 @@
       x: () => endX,
       ease: 'none',
       onUpdate: function () {
-        const carX = gsap.getProperty(car, 'x') + (carWidth * 0.55);
+        const carX = gsap.getProperty(car, 'x') || 0;
+        const carFront = carX + (carWidth * 0.6);
 
         // Illuminates letters as car passes them
         letters.forEach((letter, i) => {
-          const letterX = valueRect.left + letterOffsets[i];
-          if (carX >= letterX) {
+          if (carFront >= letterPositions[i]) {
             letter.style.opacity = '1';
           } else {
             letter.style.opacity = '0.15';
@@ -95,7 +99,7 @@
         });
 
         // Expands green trail directly behind car
-        gsap.set(trail, { width: carX });
+        gsap.set(trail, { width: carX + (carWidth * 0.3) });
       },
     });
 

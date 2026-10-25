@@ -62,27 +62,29 @@ body {
 }
 
 .value-add {
-  top: 15% !important;
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(3rem, 7.5vw, 8rem);
-  font-weight: 800;
   position: absolute;
-  left: 5%;
+  top: 50% !important;
+  transform: translateY(-50%);
+  left: 4%;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.8rem, 4.2vw, 4.5rem);
+  font-weight: 800;
   z-index: 5;
   display: flex;
-  gap: 0.35rem;
+  gap: clamp(0.1rem, 0.35vw, 0.4rem);
   pointer-events: none;
   user-select: none;
+  white-space: nowrap;
 }
 
 .value-letter {
   color: #111;
-  opacity: 0;
+  opacity: 0.15;
   transition: opacity 0.1s linear;
 }
 
 .value-letter.space {
-  width: clamp(1rem, 2vw, 2.5rem);
+  width: clamp(0.6rem, 1.5vw, 1.8rem);
 }
 
 .text-box {
