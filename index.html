@@ -1,487 +1,83 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ITZFIZZ — Scroll-Driven Supercar Hero Section Animation</title>
-  <meta name="description" content="A high-performance, scroll-driven interactive hero section animation built with GSAP, ScrollTrigger, and modern web technologies." />
-  <meta name="keywords" content="GSAP, ScrollTrigger, Hero Animation, Scroll Driven Animation, Web Development, Frontend, McLaren" />
-  <meta name="author" content="Ankit Singh Tomar" />
+  <title>Scroll Car Animation — ITZFIZZ</title>
 
-  <!-- Open Graph / Social Meta -->
-  <meta property="og:title" content="ITZFIZZ — Scroll-Driven Supercar Hero Section Animation" />
-  <meta property="og:description" content="Experience butter-smooth scroll-driven motion, dynamic letter illumination, and interactive telemetry powered by GSAP." />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="car.png" />
-
-  <!-- Google Fonts: Syne, Space Grotesk, JetBrains Mono -->
+  <!-- Google Fonts: Syne & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=Syne:wght@700;800;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- Tailwind CSS via CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            syne: ['Syne', 'sans-serif'],
-            space: ['"Space Grotesk"', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace'],
-          },
-          colors: {
-            brand: {
-              lime: '#def54f',
-              cyan: '#6ac9ff',
-              orange: '#fa7328',
-              trail: '#45db7d',
-              dark: '#0d0f12',
-              cardDark: '#161920',
-              road: '#1a1c23',
-            }
-          }
-        }
-      }
-    }
-  </script>
-
-  <!-- Lucide Icons -->
-  <script src="https://unpkg.com/lucide@latest"></script>
-
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body class="bg-[#0b0c10] text-slate-100 font-space selection:bg-[#def54f] selection:text-black overflow-x-hidden">
-
-  <!-- Top Ambient Glow -->
-  <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-gradient-to-b from-emerald-500/10 via-cyan-500/5 to-transparent blur-3xl pointer-events-none z-0"></div>
-
-  <!-- Sticky Navbar -->
-  <header class="fixed top-0 left-0 right-0 z-50 px-6 py-4 backdrop-blur-md bg-[#0b0c10]/80 border-b border-white/5 transition-all duration-300" id="navbar">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      
-      <!-- Brand Logo -->
-      <a href="#hero-container" class="flex items-center gap-2.5 group cursor-pointer">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#def54f] to-[#45db7d] flex items-center justify-center text-black font-black text-lg shadow-[0_0_20px_rgba(222,245,79,0.3)] group-hover:scale-105 transition-transform">
-          ⚡
-        </div>
-        <div>
-          <span class="font-syne font-black text-xl tracking-wider text-white group-hover:text-[#def54f] transition-colors">ITZFIZZ</span>
-          <span class="hidden sm:inline-block text-[10px] tracking-widest font-mono uppercase bg-white/10 text-emerald-400 px-1.5 py-0.5 rounded ml-2">v2.4 Engine</span>
-        </div>
-      </a>
-
-      <!-- Quick Nav Links -->
-      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-        <a href="#hero-container" class="hover:text-[#def54f] transition-colors flex items-center gap-1.5">
-          <i data-lucide="play" class="w-3.5 h-3.5"></i> Hero Motion
-        </a>
-        <a href="#features-section" class="hover:text-[#def54f] transition-colors flex items-center gap-1.5">
-          <i data-lucide="cpu" class="w-3.5 h-3.5"></i> Architecture
-        </a>
-        <a href="#metrics-breakdown" class="hover:text-[#def54f] transition-colors flex items-center gap-1.5">
-          <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i> Impact Metrics
-        </a>
-        <a href="#code-guide" class="hover:text-[#def54f] transition-colors flex items-center gap-1.5">
-          <i data-lucide="code-2" class="w-3.5 h-3.5"></i> Implementation
-        </a>
-      </nav>
-
-      <!-- Interactive Tool Controls -->
-      <div class="flex items-center gap-3">
-        <!-- Audio Synth Engine Toggle -->
-        <button id="soundToggleBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-slate-300 transition-all hover:border-[#def54f]/50" title="Toggle V8 Engine Sound FX">
-          <i data-lucide="volume-x" class="w-4 h-4 text-slate-400" id="soundIcon"></i>
-          <span id="soundLabel">Sound Off</span>
-        </button>
-
-        <!-- Auto-Drive Demo Button -->
-        <button id="autoDriveBtn" class="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-gradient-to-r from-[#def54f] to-[#45db7d] text-black font-semibold text-xs shadow-[0_0_15px_rgba(222,245,79,0.25)] hover:shadow-[0_0_25px_rgba(222,245,79,0.45)] hover:scale-105 active:scale-95 transition-all">
-          <i data-lucide="play-circle" class="w-4 h-4"></i>
-          <span>Auto Drive</span>
-        </button>
-
-        <!-- GitHub Repository Link -->
-        <a href="https://github.com/TomHacker69/Scroll-Driven-Hero-Section-Animation" target="_blank" rel="noopener noreferrer" class="p-2 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white transition-colors" title="View Source on GitHub">
-          <i data-lucide="github" class="w-4 h-4"></i>
-        </a>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- ======================================================== -->
-  <!-- HERO SECTION WITH SCROLL-DRIVEN PINNING -->
-  <!-- ======================================================== -->
-  <main>
-    <section class="hero-scroll-wrapper relative" id="hero-container">
-      
-      <!-- Sticky Pinned Viewport Container (100vh) -->
-      <div class="sticky-track-viewport w-full h-screen sticky top-0 flex flex-col justify-between overflow-hidden bg-[#0d0f14] select-none" id="viewport">
-        
-        <!-- Background Grid & Dynamic Particles -->
-        <div class="absolute inset-0 bg-grid-pattern opacity-15 pointer-events-none"></div>
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[400px] bg-gradient-to-r from-emerald-500/10 via-[#def54f]/5 to-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
-
-        <!-- Top HUD / Status Banner -->
-        <div class="relative z-20 w-full px-6 pt-24 pb-2 max-w-7xl mx-auto flex items-center justify-between">
-          <div class="flex items-center gap-2">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-              SCROLL ENGINE ACTIVE
-            </span>
-            <span class="hidden sm:inline-block text-xs font-mono text-slate-400">| McLaren 720S Twin-Turbo V8</span>
-          </div>
-
-          <!-- Color Customizer for Trail & Underglow -->
-          <div class="flex items-center gap-2">
-            <span class="text-xs font-mono text-slate-400 hidden md:inline">Neon Trail:</span>
-            <div class="flex items-center gap-1.5 bg-black/40 backdrop-blur p-1 rounded-full border border-white/10">
-              <button class="color-dot w-4 h-4 rounded-full bg-[#45db7d] ring-2 ring-white/80 transition-all hover:scale-125" data-color="#45db7d" title="Acid Green (Original)"></button>
-              <button class="color-dot w-4 h-4 rounded-full bg-[#ff7300] transition-all hover:scale-125" data-color="#ff7300" title="Papaya Orange"></button>
-              <button class="color-dot w-4 h-4 rounded-full bg-[#6ac9ff] transition-all hover:scale-125" data-color="#6ac9ff" title="Hyper Cyan"></button>
-              <button class="color-dot w-4 h-4 rounded-full bg-[#ff2a85] transition-all hover:scale-125" data-color="#ff2a85" title="Neon Magenta"></button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Central Stage: Highway Track & Headline Container -->
-        <div class="relative w-full flex-1 flex flex-col justify-center items-center overflow-hidden my-auto">
-          
-          <!-- Floating Metric Box 1: TOP LEFT-CENTER (Lime) -->
-          <div class="metric-card metric-box" id="box1" style="top: 8%; right: 38%;">
-            <div class="metric-card-inner bg-[#def54f] text-[#111] shadow-[0_10px_35px_rgba(222,245,79,0.35)]">
-              <div class="flex items-center justify-between gap-4">
-                <span class="num-box font-syne font-black text-4xl lg:text-5xl tracking-tight counter-val" data-target="58">0%</span>
-                <div class="p-2 bg-black/10 rounded-xl">
-                  <i data-lucide="trending-up" class="w-5 h-5 text-black"></i>
-                </div>
-              </div>
-              <p class="text-xs sm:text-sm font-semibold text-black/90 mt-1 leading-snug">
-                Increase in pick up point use
-              </p>
-            </div>
-          </div>
-
-          <!-- Floating Metric Box 2: BOTTOM LEFT-CENTER (Sky Cyan) -->
-          <div class="metric-card metric-box" id="box2" style="bottom: 8%; right: 36%;">
-            <div class="metric-card-inner bg-[#6ac9ff] text-[#111] shadow-[0_10px_35px_rgba(106,201,255,0.35)]">
-              <div class="flex items-center justify-between gap-4">
-                <span class="num-box font-syne font-black text-4xl lg:text-5xl tracking-tight counter-val" data-target="23">0%</span>
-                <div class="p-2 bg-black/10 rounded-xl">
-                  <i data-lucide="phone-off" class="w-5 h-5 text-black"></i>
-                </div>
-              </div>
-              <p class="text-xs sm:text-sm font-semibold text-black/90 mt-1 leading-snug">
-                Decreased in customer phone calls
-              </p>
-            </div>
-          </div>
-
-          <!-- Floating Metric Box 3: TOP RIGHT (Dark Carbon) -->
-          <div class="metric-card metric-box" id="box3" style="top: 8%; right: 10%;">
-            <div class="metric-card-inner bg-[#1e2029] text-white border border-white/10 shadow-[0_10px_35px_rgba(0,0,0,0.5)]">
-              <div class="flex items-center justify-between gap-4">
-                <span class="num-box font-syne font-black text-4xl lg:text-5xl tracking-tight text-[#def54f] counter-val" data-target="27">0%</span>
-                <div class="p-2 bg-white/10 rounded-xl">
-                  <i data-lucide="repeat" class="w-5 h-5 text-[#def54f]"></i>
-                </div>
-              </div>
-              <p class="text-xs sm:text-sm font-semibold text-slate-300 mt-1 leading-snug">
-                Increase in pick up point use
-              </p>
-            </div>
-          </div>
-
-          <!-- Floating Metric Box 4: BOTTOM RIGHT (Vibrant Orange) -->
-          <div class="metric-card metric-box" id="box4" style="bottom: 8%; right: 12%;">
-            <div class="metric-card-inner bg-[#fa7328] text-[#111] shadow-[0_10px_35px_rgba(250,115,40,0.35)]">
-              <div class="flex items-center justify-between gap-4">
-                <span class="num-box font-syne font-black text-4xl lg:text-5xl tracking-tight counter-val" data-target="40">0%</span>
-                <div class="p-2 bg-black/10 rounded-xl">
-                  <i data-lucide="headset" class="w-5 h-5 text-black"></i>
-                </div>
-              </div>
-              <p class="text-xs sm:text-sm font-semibold text-black/90 mt-1 leading-snug">
-                Decreased in customer phone calls
-              </p>
-            </div>
-          </div>
-
-          <!-- The High-Speed Highway / Track -->
-          <div class="road-container relative w-full h-[220px] sm:h-[250px] bg-[#16181f] border-y border-white/10 flex items-center overflow-hidden" id="road">
-            
-            <!-- Road Asphalt Texture & Curbs -->
-            <div class="curb curb-top"></div>
-            <div class="curb curb-bottom"></div>
-            <div class="lane-markings"></div>
-
-            <!-- Dynamic Glowing Trail Behind Car -->
-            <div class="trail" id="trail">
-              <div class="trail-glow"></div>
-            </div>
-
-            <!-- Supercar Element -->
-            <div class="car-wrapper" id="car">
-              <!-- Headlight Beams (Front) -->
-              <div class="headlight-beam"></div>
-              <!-- Taillight Glow (Rear) -->
-              <div class="taillight-glow"></div>
-              <!-- Car Image Asset -->
-              <img src="car.png" alt="McLaren 720S Supercar Top View" class="car-img" id="carImg" draggable="false" />
-            </div>
-
-            <!-- Letter-Spaced Headline (Text to Illuminate on Scroll) -->
-            <div class="value-add" id="valueText" aria-label="WELCOME ITZFIZZ">
-              <span class="value-letter">W</span>
-              <span class="value-letter">E</span>
-              <span class="value-letter">L</span>
-              <span class="value-letter">C</span>
-              <span class="value-letter">O</span>
-              <span class="value-letter">M</span>
-              <span class="value-letter">E</span>
-              <span class="value-letter space">&nbsp;</span>
-              <span class="value-letter">I</span>
-              <span class="value-letter">T</span>
-              <span class="value-letter">Z</span>
-              <span class="value-letter">F</span>
-              <span class="value-letter">I</span>
-              <span class="value-letter">Z</span>
-              <span class="value-letter">Z</span>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- Cockpit Telemetry HUD (Bottom Bar) -->
-        <div class="relative z-30 w-full px-6 py-4 max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 border-t border-white/5 bg-[#0b0c10]/90 backdrop-blur-md">
-          
-          <!-- Scroll Instructions & Progress Bar -->
-          <div class="flex items-center gap-4 w-full md:w-auto">
-            <div class="flex items-center gap-2 text-xs font-mono text-slate-400">
-              <i data-lucide="mouse" class="w-4 h-4 text-[#def54f] animate-bounce"></i>
-              <span>SCROLL DOWN TO DRIVE</span>
-            </div>
-
-            <div class="flex-1 md:w-48 h-2 bg-white/10 rounded-full overflow-hidden p-[1px]">
-              <div class="h-full bg-gradient-to-r from-[#def54f] to-[#45db7d] rounded-full transition-all duration-75" id="hudProgressBar" style="width: 0%;"></div>
-            </div>
-
-            <span class="font-mono text-xs font-bold text-white min-w-[42px]" id="hudPercentText">0%</span>
-          </div>
-
-          <!-- Supercar Speedometer & Gear HUD -->
-          <div class="flex items-center gap-6">
-            <!-- Gear Display -->
-            <div class="flex items-center gap-2">
-              <span class="text-[11px] font-mono text-slate-400">GEAR</span>
-              <span class="font-mono text-xl font-black text-[#def54f] px-2 py-0.5 rounded bg-white/5 border border-white/10" id="hudGear">N</span>
-            </div>
-
-            <!-- Speedometer Display -->
-            <div class="flex items-center gap-2">
-              <span class="text-[11px] font-mono text-slate-400">SPEED</span>
-              <div class="flex items-baseline gap-1 font-mono">
-                <span class="text-2xl font-black text-white" id="hudSpeed">0</span>
-                <span class="text-[10px] text-slate-400">KM/H</span>
-              </div>
-            </div>
-
-            <!-- RPM Gauge Bar -->
-            <div class="hidden sm:flex flex-col gap-1 w-28">
-              <div class="flex justify-between text-[10px] font-mono text-slate-400">
-                <span>RPM</span>
-                <span id="hudRpmText">800</span>
-              </div>
-              <div class="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                <div class="h-full bg-gradient-to-r from-emerald-400 via-amber-400 to-red-500 rounded-full transition-all duration-100" id="hudRpmBar" style="width: 10%;"></div>
-              </div>
-            </div>
-
-            <!-- Reset Scroll Button -->
-            <button id="resetScrollBtn" class="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors" title="Reset to Top">
-              <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-    <!-- ======================================================== -->
-    <!-- SECTION 2: MOTION ARCHITECTURE & INTERACTIVE CONTROLS -->
-    <!-- ======================================================== -->
-    <section class="py-24 px-6 relative z-10 bg-[#090a0d] border-t border-white/10" id="features-section">
-      <div class="max-w-7xl mx-auto">
-        
-        <!-- Section Header -->
-        <div class="text-center max-w-3xl mx-auto mb-16">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-semibold bg-[#def54f]/10 text-[#def54f] border border-[#def54f]/20 mb-4">
-            ENGINEERING SPECIFICATIONS
-          </div>
-          <h2 class="font-syne font-black text-3xl sm:text-5xl text-white tracking-tight mb-4">
-            Engineered for 60+ FPS Scroll Physics
-          </h2>
-          <p class="text-slate-400 text-base sm:text-lg leading-relaxed">
-            Recreated with vanilla web architecture and GSAP ScrollTrigger. Every pixel of translation, letter illumination, and metric card entrance is computed without layout reflow.
-          </p>
-        </div>
-
-        <!-- 3 Feature Pillars -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          
-          <div class="p-8 rounded-2xl bg-[#12141c] border border-white/5 hover:border-[#def54f]/30 transition-all group">
-            <div class="w-12 h-12 rounded-xl bg-[#def54f]/10 text-[#def54f] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <i data-lucide="zap" class="w-6 h-6"></i>
-            </div>
-            <h3 class="font-syne font-bold text-xl text-white mb-2">Scrub Interpolation</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-              Directly tied to the scroll position using sub-millisecond inertia smoothing (`scrub: 1`). Fluid motion without abrupt time-based jumps or stutter.
-            </p>
-            <span class="text-xs font-mono text-[#def54f] flex items-center gap-1">
-              <code>transform: translate3d</code> <i data-lucide="check" class="w-3.5 h-3.5"></i>
-            </span>
-          </div>
-
-          <div class="p-8 rounded-2xl bg-[#12141c] border border-white/5 hover:border-[#6ac9ff]/30 transition-all group">
-            <div class="w-12 h-12 rounded-xl bg-[#6ac9ff]/10 text-[#6ac9ff] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <i data-lucide="sparkles" class="w-6 h-6"></i>
-            </div>
-            <h3 class="font-syne font-bold text-xl text-white mb-2">Collision Illumination</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-              Real-time spatial bounding box collision detects when the supercar's center or beam crosses each character, igniting letter illumination.
-            </p>
-            <span class="text-xs font-mono text-[#6ac9ff] flex items-center gap-1">
-              <code>letterOffsets & carX logic</code> <i data-lucide="check" class="w-3.5 h-3.5"></i>
-            </span>
-          </div>
-
-          <div class="p-8 rounded-2xl bg-[#12141c] border border-white/5 hover:border-[#fa7328]/30 transition-all group">
-            <div class="w-12 h-12 rounded-xl bg-[#fa7328]/10 text-[#fa7328] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-              <i data-lucide="activity" class="w-6 h-6"></i>
-            </div>
-            <h3 class="font-syne font-bold text-xl text-white mb-2">Scroll Velocity HUD</h3>
-            <p class="text-slate-400 text-sm leading-relaxed mb-4">
-              Dynamic telemetry calculates scroll velocity on the fly, feeding real-time digital speedometer, RPM sweeps, and gear shift transitions.
-            </p>
-            <span class="text-xs font-mono text-[#fa7328] flex items-center gap-1">
-              <code>ScrollTrigger.getVelocity()</code> <i data-lucide="check" class="w-3.5 h-3.5"></i>
-            </span>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ======================================================== -->
-    <!-- SECTION 3: IMPACT METRICS SHOWCASE -->
-    <!-- ======================================================== -->
-    <section class="py-20 px-6 bg-[#0c0d12] border-t border-white/5" id="metrics-breakdown">
-      <div class="max-w-7xl mx-auto">
-        <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-12">
-          <div>
-            <span class="text-xs font-mono text-emerald-400 font-semibold tracking-wider uppercase">PERFORMANCE METRICS</span>
-            <h2 class="font-syne font-black text-3xl sm:text-4xl text-white mt-1">Impact Milestones</h2>
-          </div>
-          <p class="text-slate-400 text-sm max-w-md mt-2 md:mt-0">
-            Statistics triggered during the scroll progression, illustrating significant efficiency gains across logistics and operations.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          <div class="p-6 rounded-2xl bg-[#def54f] text-black">
-            <div class="font-syne font-black text-5xl mb-2">58%</div>
-            <div class="font-bold text-base mb-1">Increase in pick up point use</div>
-            <p class="text-xs text-black/75">Triggered at 30% scroll progress with dynamic counter animation.</p>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-[#6ac9ff] text-black">
-            <div class="font-syne font-black text-5xl mb-2">23%</div>
-            <div class="font-bold text-base mb-1">Decreased customer calls</div>
-            <p class="text-xs text-black/75">Triggered at 50% scroll progress reducing support overhead.</p>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-[#1e2029] text-white border border-white/10">
-            <div class="font-syne font-black text-5xl mb-2 text-[#def54f]">27%</div>
-            <div class="font-bold text-base mb-1">Increase in pick up point use</div>
-            <p class="text-xs text-slate-400">Triggered at 70% scroll progress expanding micro-depot network.</p>
-          </div>
-
-          <div class="p-6 rounded-2xl bg-[#fa7328] text-black">
-            <div class="font-syne font-black text-5xl mb-2">40%</div>
-            <div class="font-bold text-base mb-1">Decreased customer calls</div>
-            <p class="text-xs text-black/75">Triggered at 90% scroll progress reaching maximum fleet efficiency.</p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ======================================================== -->
-    <!-- SECTION 4: CODE ARCHITECTURE & COMPARISON -->
-    <!-- ======================================================== -->
-    <section class="py-20 px-6 bg-[#08090c] border-t border-white/5" id="code-guide">
-      <div class="max-w-7xl mx-auto">
-        <div class="p-8 sm:p-12 rounded-3xl bg-[#10121a] border border-white/10 relative overflow-hidden">
-          
-          <div class="max-w-2xl">
-            <span class="text-xs font-mono text-[#def54f] font-semibold tracking-wider uppercase">SUBMISSION READY</span>
-            <h2 class="font-syne font-black text-3xl sm:text-4xl text-white mt-2 mb-4">
-              Dual Architecture: Vanilla & React / Next.js
-            </h2>
-            <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6">
-              This repository contains both the pure vanilla implementation (HTML5 + CSS3 + ES6 JS + GSAP ScrollTrigger) deployed directly to GitHub Pages, as well as the React / Next.js modular component (<code class="text-emerald-400">HeroSection.jsx</code>) with Tailwind styling.
-            </p>
-
-            <div class="flex flex-wrap items-center gap-4">
-              <a href="https://github.com/TomHacker69/Scroll-Driven-Hero-Section-Animation" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-white text-black font-semibold text-sm hover:bg-[#def54f] transition-all flex items-center gap-2">
-                <i data-lucide="github" class="w-4 h-4"></i>
-                <span>Explore GitHub Repository</span>
-              </a>
-              <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-white font-medium text-sm border border-white/10 transition-colors flex items-center gap-2">
-                <i data-lucide="arrow-up" class="w-4 h-4"></i>
-                <span>Back to Hero Top</span>
-              </button>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <!-- Modern Footer -->
-  <footer class="py-12 px-6 border-t border-white/10 bg-[#07070a] text-xs font-mono text-slate-500">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="flex items-center gap-2">
-        <span class="text-white font-bold font-syne">ITZFIZZ</span>
-        <span>— Recreated by Ankit Singh Tomar</span>
-      </div>
-      <div>
-        <span>Built with GSAP 3.12, ScrollTrigger, Vanilla Web Technologies & Tailwind CSS.</span>
-      </div>
-    </div>
-  </footer>
-
-  <!-- GSAP & Plugins via CDN -->
+  <!-- GSAP & ScrollTrigger via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 
-  <!-- Application Interaction Logic -->
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Scroll Section (Scroll-Driven Track) -->
+  <div class="section" id="hero-section">
+    <div class="track" id="track">
+      
+      <!-- Highway Track -->
+      <div class="road" id="road">
+        <img
+          src="car.png"
+          alt="McLaren Supercar"
+          class="car"
+          id="car"
+        />
+        <div class="trail" id="trail"></div>
+
+        <!-- Headline Typography (Illuminated by Car) -->
+        <div class="value-add" id="valueText">
+          <span class="value-letter">W</span>
+          <span class="value-letter">E</span>
+          <span class="value-letter">L</span>
+          <span class="value-letter">C</span>
+          <span class="value-letter">O</span>
+          <span class="value-letter">M</span>
+          <span class="value-letter">E</span>
+          <span class="value-letter space">&nbsp;</span>
+          <span class="value-letter">I</span>
+          <span class="value-letter">T</span>
+          <span class="value-letter">Z</span>
+          <span class="value-letter">F</span>
+          <span class="value-letter">I</span>
+          <span class="value-letter">Z</span>
+          <span class="value-letter">Z</span>
+        </div>
+      </div>
+
+      <!-- Floating Impact Metric Cards -->
+      <div class="text-box" id="box1" style="top: 8%; right: 32%;">
+        <span class="num-box">58%</span>
+        <span>Increase in pick up point use</span>
+      </div>
+
+      <div class="text-box" id="box2" style="bottom: 8%; right: 35%;">
+        <span class="num-box">23%</span>
+        <span>Decreased in customer phone calls</span>
+      </div>
+
+      <div class="text-box" id="box3" style="top: 8%; right: 10%;">
+        <span class="num-box">27%</span>
+        <span>Increase in pick up point use</span>
+      </div>
+
+      <div class="text-box" id="box4" style="bottom: 8%; right: 12%;">
+        <span class="num-box">40%</span>
+        <span>Decreased in customer phone calls</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Animation Logic -->
   <script src="app.js"></script>
-
-  <script>
-    // Initialize Lucide icons
-    lucide.createIcons();
-  </script>
 </body>
 </html>

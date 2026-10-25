@@ -1,380 +1,189 @@
-/* ========================================================
-   ITZFIZZ — SCROLL-DRIVEN HERO ANIMATION STYLESHEET
-   High-performance GPU-accelerated styling & animations
-   ======================================================== */
-
-:root {
-  --neon-trail: #45db7d;
-  --neon-lime: #def54f;
-  --neon-cyan: #6ac9ff;
-  --neon-orange: #fa7328;
-  --dark-bg: #0b0c10;
-  --road-bg: #161821;
-}
-
-/* Base resets & smooth scrolling */
-html, body {
-  background-color: var(--dark-bg);
-  color: #f1f5f9;
-  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
   overflow-x: hidden;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
+  background-color: #121212;
+  color: white;
 }
 
-/* Background grid pattern */
-.bg-grid-pattern {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-}
-
-/* ========================================================
-   HERO SCROLL SYSTEM (PINNED CONTAINER)
-   ======================================================== */
-
-.hero-scroll-wrapper {
-  /* Scroll distance: 260vh provides a smooth, satisfying scroll duration */
-  height: 260vh;
+.section {
+  height: 200vh;
   position: relative;
-  background: var(--dark-bg);
+  background: #121212;
 }
 
-.sticky-track-viewport {
+.track {
   position: sticky;
   top: 0;
   height: 100vh;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  will-change: transform;
-}
-
-/* ========================================================
-   THE HIGH-SPEED HIGHWAY / TRACK
-   ======================================================== */
-
-.road-container {
-  width: 100vw;
-  height: 230px;
-  background-color: var(--road-bg);
+  align-items: center;
+  justify-content: center;
+  background-color: #d1d1d1;
   position: relative;
   overflow: hidden;
-  box-shadow: 
-    inset 0 10px 30px rgba(0, 0, 0, 0.8),
-    inset 0 -10px 30px rgba(0, 0, 0, 0.8),
-    0 0 60px rgba(0, 0, 0, 0.9);
 }
 
-/* Motorsport Curbs (Top & Bottom) */
-.curb {
+.road {
+  width: 100vw;
+  height: 200px;
+  background-color: #1e1e1e;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.car {
+  height: 200px;
   position: absolute;
-  left: 0;
-  right: 0;
-  height: 8px;
-  z-index: 6;
-  background-size: 32px 100%;
-}
-
-.curb-top {
   top: 0;
-  background-image: repeating-linear-gradient(
-    -45deg,
-    #ef4444,
-    #ef4444 12px,
-    #ffffff 12px,
-    #ffffff 24px
-  );
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
-}
-
-.curb-bottom {
-  bottom: 0;
-  background-image: repeating-linear-gradient(
-    45deg,
-    #ef4444,
-    #ef4444 12px,
-    #ffffff 12px,
-    #ffffff 24px
-  );
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
-}
-
-/* Center road markings */
-.lane-markings {
-  position: absolute;
-  top: 50%;
   left: 0;
-  right: 0;
-  height: 4px;
-  transform: translateY(-50%);
-  background-image: linear-gradient(
-    to right,
-    rgba(255, 255, 255, 0.25) 50%,
-    transparent 50%
-  );
-  background-size: 60px 100%;
-  z-index: 2;
+  z-index: 10;
   pointer-events: none;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.6));
 }
-
-/* ========================================================
-   NEON SLIPSTREAM TRAIL (BEHIND CAR)
-   ======================================================== */
 
 .trail {
+  height: 200px;
+  background: #45db7d;
   position: absolute;
   top: 0;
   left: 0;
-  height: 100%;
+  z-index: 1;
   width: 0;
-  background: var(--neon-trail);
-  z-index: 3;
-  pointer-events: none;
-  transition: background 0.3s ease;
-  will-change: width;
-}
-
-.trail-glow {
-  position: absolute;
-  top: 0;
-  right: -20px;
-  bottom: 0;
-  width: 40px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(69, 219, 125, 0) 80%);
-  filter: blur(8px);
   pointer-events: none;
 }
-
-/* ========================================================
-   SUPERCAR COMPONENT
-   ======================================================== */
-
-.car-wrapper {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-  height: 190px;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.car-img {
-  height: 100%;
-  width: auto;
-  object-fit: contain;
-  display: block;
-  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.85));
-  user-select: none;
-}
-
-/* Headlight Beam Cone */
-.headlight-beam {
-  position: absolute;
-  right: -280px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 320px;
-  height: 220px;
-  background: radial-gradient(
-    ellipse at left center,
-    rgba(255, 255, 240, 0.45) 0%,
-    rgba(255, 255, 220, 0.15) 40%,
-    transparent 75%
-  );
-  clip-path: polygon(0 35%, 100% 0%, 100% 100%, 0 65%);
-  pointer-events: none;
-  filter: blur(4px);
-  z-index: -1;
-}
-
-/* Taillight Red/Amber Glow */
-.taillight-glow {
-  position: absolute;
-  left: -25px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 50px;
-  height: 80px;
-  background: radial-gradient(circle, rgba(239, 68, 68, 0.8) 0%, transparent 70%);
-  filter: blur(6px);
-  pointer-events: none;
-}
-
-/* ========================================================
-   LETTER-SPACED HEADLINE (WELCOME ITZFIZZ)
-   ======================================================== */
 
 .value-add {
+  top: 15% !important;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 7.5vw, 8rem);
+  font-weight: 800;
   position: absolute;
-  top: 50%;
   left: 5%;
-  transform: translateY(-50%);
   z-index: 5;
   display: flex;
-  align-items: center;
-  gap: clamp(0.2rem, 0.7vw, 1rem);
+  gap: 0.35rem;
   pointer-events: none;
   user-select: none;
 }
 
 .value-letter {
-  font-family: 'Syne', sans-serif;
-  font-size: clamp(3.2rem, 7.5vw, 7.8rem);
-  font-weight: 900;
-  line-height: 1;
-  color: #111111;
+  color: #111;
   opacity: 0;
-  transition: opacity 0.1s linear, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: inline-block;
-  will-change: opacity, transform;
-}
-
-/* Active revealed letter */
-.value-letter.revealed {
-  opacity: 1 !important;
-  color: #0d0f14;
-  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.3);
+  transition: opacity 0.1s linear;
 }
 
 .value-letter.space {
-  width: clamp(1rem, 2.5vw, 2.5rem);
+  width: clamp(1rem, 2vw, 2.5rem);
 }
 
-/* ========================================================
-   FLOATING IMPACT METRIC BOXES
-   ======================================================== */
-
-.metric-card {
-  position: absolute;
-  z-index: 15;
+.text-box {
   opacity: 0;
-  transform: translateY(25px) scale(0.92);
-  pointer-events: none;
-  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: opacity, transform;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  padding: 24px 28px;
+  border-radius: 12px;
+  margin: 1rem;
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 290px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  font-weight: 500;
 }
 
-.metric-card.show {
+.num-box {
+  font-family: 'Syne', sans-serif;
+  font-size: 54px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+#box1 {
+  background: #def54f;
+  color: #111;
+  top: 8%;
+  right: 32%;
+}
+
+#box2 {
+  background: #6ac9ff;
+  color: #111;
+  bottom: 8%;
+  right: 35%;
+}
+
+#box3 {
+  background: #333333;
+  color: #ffffff;
+  top: 8%;
+  right: 10%;
+}
+
+#box4 {
+  background: #fa7328;
+  color: #111;
+  bottom: 8%;
+  right: 12%;
+}
+
+.text-box.show {
   opacity: 1 !important;
-  transform: translateY(0) scale(1) !important;
-  pointer-events: auto;
+  transform: translateY(0) !important;
 }
 
-.metric-card-inner {
-  border-radius: 1.25rem;
-  padding: 1.5rem 1.75rem;
-  min-width: 250px;
-  max-width: 320px;
-  backdrop-filter: blur(12px);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.metric-card-inner:hover,
-.metric-card.active-pulse .metric-card-inner {
-  transform: translateY(-6px) scale(1.04);
-}
-
-.metric-card.active-pulse {
-  z-index: 20;
-}
-
-/* Individual box colors */
-#box1 .metric-card-inner {
-  background: var(--neon-lime);
-}
-
-#box2 .metric-card-inner {
-  background: var(--neon-cyan);
-}
-
-#box3 .metric-card-inner {
-  background: #1c1f2b;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-}
-
-#box4 .metric-card-inner {
-  background: var(--neon-orange);
-}
-
-/* ========================================================
-   ANIMATIONS & MICRO-INTERACTIONS
-   ======================================================== */
-
-@keyframes pulseGlow {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.03);
-  }
-}
-
-.pulse-glow {
-  animation: pulseGlow 2.5s infinite ease-in-out;
-}
-
-/* Responsive adjustments */
+/* Tablet & Mobile Responsiveness */
 @media (max-width: 1024px) {
-  .road-container {
-    height: 190px;
+  .road {
+    height: 170px;
   }
-  
-  .car-wrapper {
-    height: 160px;
+  .car {
+    height: 170px;
   }
-  
-  .metric-card-inner {
-    padding: 1.1rem 1.3rem;
-    min-width: 220px;
+  .trail {
+    height: 170px;
+  }
+  .num-box {
+    font-size: 44px;
+  }
+  .text-box {
+    padding: 16px 20px;
+    max-width: 230px;
+    font-size: 14px;
   }
 }
 
 @media (max-width: 768px) {
-  .road-container {
-    height: 160px;
+  .road {
+    height: 140px;
   }
-
-  .car-wrapper {
-    height: 130px;
+  .car {
+    height: 140px;
   }
-
-  .curb {
-    height: 6px;
+  .trail {
+    height: 140px;
   }
-
-  /* Compact metric positions on tablet/mobile */
-  #box1 {
-    top: 3% !important;
-    right: 5% !important;
+  .num-box {
+    font-size: 34px;
   }
-
-  #box2 {
-    bottom: 3% !important;
-    right: 5% !important;
+  .text-box {
+    padding: 12px 16px;
+    max-width: 180px;
+    font-size: 12px;
   }
-
-  #box3 {
-    top: 3% !important;
-    right: 5% !important;
-  }
-
-  #box4 {
-    bottom: 3% !important;
-    right: 5% !important;
-  }
-
-  .value-add {
-    left: 2%;
-  }
+  #box1 { top: 4%; right: 4%; }
+  #box2 { bottom: 4%; right: 4%; }
+  #box3 { top: 4%; right: 4%; }
+  #box4 { bottom: 4%; right: 4%; }
 }
