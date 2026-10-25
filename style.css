@@ -278,8 +278,13 @@ html, body {
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.metric-card-inner:hover {
-  transform: translateY(-4px) scale(1.02);
+.metric-card-inner:hover,
+.metric-card.active-pulse .metric-card-inner {
+  transform: translateY(-6px) scale(1.04);
+}
+
+.metric-card.active-pulse {
+  z-index: 20;
 }
 
 /* Individual box colors */

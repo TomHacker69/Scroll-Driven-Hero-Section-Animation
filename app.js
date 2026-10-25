@@ -144,20 +144,21 @@
       }
     }, '-=0.5');
 
-    // Subtle teaser of the first metric card
-    tl.fromTo(box1, 
-      { opacity: 0, y: 30, scale: 0.9 },
-      { 
-        opacity: 0.4, 
-        y: 0, 
-        scale: 0.96, 
-        duration: 0.6,
-        onComplete: () => {
-          gsap.to(box1, { opacity: 0, duration: 0.5, delay: 0.8 });
-        }
-      }, 
-      '-=0.3'
-    );
+    // Statistics animate in one by one with subtle delay (Requirement #2)
+    const boxes = [box1, box2, box3, box4];
+    tl.to(boxes, {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      stagger: 0.18,
+      duration: 0.7,
+      ease: 'back.out(1.1)',
+      onStart: () => {
+        boxes.forEach((box, idx) => {
+          setTimeout(() => triggerCounter(box), idx * 180);
+        });
+      }
+    }, '-=0.2');
   }
 
   /**
@@ -188,48 +189,48 @@
       force3D: true,
     });
 
-    // Metric Box 1: Appears at ~20% - 40%
+    // Metric Box 1 highlight: at ~15% - 38%
     ScrollTrigger.create({
       trigger: heroWrapper,
       start: '15% top',
-      end: '42% top',
-      onEnter: () => { box1.classList.add('show'); triggerCounter(box1); },
-      onLeave: () => { box1.classList.remove('show'); },
-      onEnterBack: () => { box1.classList.add('show'); },
-      onLeaveBack: () => { box1.classList.remove('show'); },
+      end: '38% top',
+      onEnter: () => box1.classList.add('active-pulse'),
+      onLeave: () => box1.classList.remove('active-pulse'),
+      onEnterBack: () => box1.classList.add('active-pulse'),
+      onLeaveBack: () => box1.classList.remove('active-pulse'),
     });
 
-    // Metric Box 2: Appears at ~35% - 60%
+    // Metric Box 2 highlight: at ~35% - 58%
     ScrollTrigger.create({
       trigger: heroWrapper,
-      start: '32% top',
-      end: '62% top',
-      onEnter: () => { box2.classList.add('show'); triggerCounter(box2); },
-      onLeave: () => { box2.classList.remove('show'); },
-      onEnterBack: () => { box2.classList.add('show'); },
-      onLeaveBack: () => { box2.classList.remove('show'); },
+      start: '35% top',
+      end: '58% top',
+      onEnter: () => box2.classList.add('active-pulse'),
+      onLeave: () => box2.classList.remove('active-pulse'),
+      onEnterBack: () => box2.classList.add('active-pulse'),
+      onLeaveBack: () => box2.classList.remove('active-pulse'),
     });
 
-    // Metric Box 3: Appears at ~55% - 80%
+    // Metric Box 3 highlight: at ~55% - 78%
     ScrollTrigger.create({
       trigger: heroWrapper,
-      start: '54% top',
-      end: '82% top',
-      onEnter: () => { box3.classList.add('show'); triggerCounter(box3); },
-      onLeave: () => { box3.classList.remove('show'); },
-      onEnterBack: () => { box3.classList.add('show'); },
-      onLeaveBack: () => { box3.classList.remove('show'); },
+      start: '55% top',
+      end: '78% top',
+      onEnter: () => box3.classList.add('active-pulse'),
+      onLeave: () => box3.classList.remove('active-pulse'),
+      onEnterBack: () => box3.classList.add('active-pulse'),
+      onLeaveBack: () => box3.classList.remove('active-pulse'),
     });
 
-    // Metric Box 4: Appears at ~75% - 100%
+    // Metric Box 4 highlight: at ~75% - 98%
     ScrollTrigger.create({
       trigger: heroWrapper,
-      start: '74% top',
-      end: '99% top',
-      onEnter: () => { box4.classList.add('show'); triggerCounter(box4); },
-      onLeave: () => { box4.classList.remove('show'); },
-      onEnterBack: () => { box4.classList.add('show'); },
-      onLeaveBack: () => { box4.classList.remove('show'); },
+      start: '75% top',
+      end: '98% top',
+      onEnter: () => box4.classList.add('active-pulse'),
+      onLeave: () => box4.classList.remove('active-pulse'),
+      onEnterBack: () => box4.classList.add('active-pulse'),
+      onLeaveBack: () => box4.classList.remove('active-pulse'),
     });
   }
 

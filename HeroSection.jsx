@@ -309,7 +309,7 @@ export default function HeroSection() {
 
             {/* Supercar Element */}
             <div ref={carRef} className="absolute top-1/2 left-0 -translate-y-1/2 h-[180px] z-10 pointer-events-none flex items-center">
-              <img src="/car.png" alt="Supercar" className="h-full w-auto object-contain drop-shadow-2xl" />
+              <img src="car.png" alt="Supercar" className="h-full w-auto object-contain drop-shadow-2xl" />
             </div>
 
             {/* Headline Letter Illumination */}
