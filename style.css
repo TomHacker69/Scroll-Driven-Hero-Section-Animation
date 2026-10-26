@@ -81,7 +81,7 @@ body {
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
-  max-width: 52vw;
+  max-width: 55vw;
 }
 
 .value-letter {
@@ -89,10 +89,13 @@ body {
   opacity: 0.15;
   transition: opacity 0.1s linear;
   will-change: opacity;
+  flex-shrink: 0;
 }
 
 .value-letter.space {
-  width: clamp(0.5rem, 1vw, 1.5rem);
+  display: inline-block;
+  width: clamp(1.4rem, 2.8vw, 3rem);
+  flex-shrink: 0;
 }
 
 .text-box {
@@ -207,7 +210,12 @@ body {
   }
   .value-add {
     font-size: clamp(1.2rem, 3vw, 2rem);
-    max-width: 48vw;
+    max-width: 52vw;
+  }
+  .value-letter.space {
+    display: inline-block;
+    width: clamp(1.1rem, 2.4vw, 2.2rem);
+    flex-shrink: 0;
   }
   .num-box {
     font-size: 38px;
@@ -239,10 +247,12 @@ body {
     left: 10px;
     font-size: clamp(0.75rem, 3.2vw, 0.95rem);
     gap: 0.12rem;
-    max-width: 44vw;
+    max-width: 50vw;
   }
   .value-letter.space {
-    width: 0.35rem;
+    display: inline-block;
+    width: clamp(0.85rem, 3.2vw, 1.4rem);
+    flex-shrink: 0;
   }
   .text-box {
     width: calc(50% - 16px);
@@ -298,7 +308,12 @@ body {
     left: 8px;
     font-size: 0.72rem;
     gap: 0.08rem;
-    max-width: 42vw;
+    max-width: 48vw;
+  }
+  .value-letter.space {
+    display: inline-block;
+    width: 0.75rem;
+    flex-shrink: 0;
   }
   .text-box {
     padding: 8px 10px;

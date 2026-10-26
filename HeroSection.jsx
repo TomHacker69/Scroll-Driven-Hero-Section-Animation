@@ -127,7 +127,7 @@ export default function HeroSection() {
               <span
                 key={index}
                 ref={(el) => (lettersRef.current[index] = el)}
-                className="value-letter"
+                className={`value-letter ${char === ' ' ? 'space' : ''}`.trim()}
               >
                 {char === ' ' ? '\u00A0' : char}
               </span>
