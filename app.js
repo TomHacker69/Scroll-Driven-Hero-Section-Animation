@@ -17,6 +17,7 @@
   const box3 = document.getElementById('box3');
   const box4 = document.getElementById('box4');
   const boxes = [box1, box2, box3, box4];
+  const scrollHint = document.getElementById('scrollHint');
 
   const road = document.getElementById('road');
   let roadRect = road.getBoundingClientRect();
@@ -27,12 +28,29 @@
 
   function calculateDimensions() {
     roadRect = road.getBoundingClientRect();
-    roadWidth = window.innerWidth;
+    roadWidth = road.offsetWidth || window.innerWidth;
     carWidth = car.offsetWidth || 180;
     endX = roadWidth - carWidth;
     letterPositions = letters.map((letter) => {
       const rect = letter.getBoundingClientRect();
       return rect.left - roadRect.left;
+    });
+  }
+
+  function animateCounters() {
+    boxes.forEach((box) => {
+      const numSpan = box.querySelector('.num-box');
+      if (!numSpan) return;
+      const target = parseInt(numSpan.getAttribute('data-target') || '0', 10);
+      const counter = { val: 0 };
+      gsap.to(counter, {
+        val: target,
+        duration: 1.2,
+        ease: 'power2.out',
+        onUpdate: () => {
+          numSpan.textContent = Math.round(counter.val) + '%';
+        }
+      });
     });
   }
 
@@ -54,7 +72,14 @@
 
     tl.fromTo(boxes,
       { opacity: 0, y: 25 },
-      { opacity: 1, y: 0, stagger: 0.15, duration: 0.6, ease: 'back.out(1.1)' },
+      { 
+        opacity: 1, 
+        y: 0, 
+        stagger: 0.15, 
+        duration: 0.6, 
+        ease: 'back.out(1.1)',
+        onComplete: animateCounters
+      },
       '-=0.3'
     );
   }
@@ -90,49 +115,35 @@
       },
     });
 
-    gsap.to(box1, {
-      scrollTrigger: {
-        trigger: '.section',
-        start: 'top+=150 top',
-        end: 'top+=450 top',
-        scrub: true,
-      },
-      opacity: 1,
-      scale: 1.05,
-    });
+    if (scrollHint) {
+      gsap.to(scrollHint, {
+        scrollTrigger: {
+          trigger: '.section',
+          start: 'top top',
+          end: 'top+=80 top',
+          scrub: true,
+        },
+        opacity: 0,
+      });
+    }
 
-    gsap.to(box2, {
-      scrollTrigger: {
+    // Responsive percentage-based highlight triggers
+    const registerBoxTrigger = (box, startPct, endPct) => {
+      ScrollTrigger.create({
         trigger: '.section',
-        start: 'top+=350 top',
-        end: 'top+=650 top',
-        scrub: true,
-      },
-      opacity: 1,
-      scale: 1.05,
-    });
+        start: `${startPct}% top`,
+        end: `${endPct}% top`,
+        onEnter: () => box.classList.add('active-pulse'),
+        onLeave: () => box.classList.remove('active-pulse'),
+        onEnterBack: () => box.classList.add('active-pulse'),
+        onLeaveBack: () => box.classList.remove('active-pulse'),
+      });
+    };
 
-    gsap.to(box3, {
-      scrollTrigger: {
-        trigger: '.section',
-        start: 'top+=550 top',
-        end: 'top+=850 top',
-        scrub: true,
-      },
-      opacity: 1,
-      scale: 1.05,
-    });
-
-    gsap.to(box4, {
-      scrollTrigger: {
-        trigger: '.section',
-        start: 'top+=750 top',
-        end: 'top+=1050 top',
-        scrub: true,
-      },
-      opacity: 1,
-      scale: 1.05,
-    });
+    registerBoxTrigger(box1, 15, 38);
+    registerBoxTrigger(box2, 35, 58);
+    registerBoxTrigger(box3, 55, 78);
+    registerBoxTrigger(box4, 75, 98);
   }
 
   let resizeTimer;

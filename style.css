@@ -11,6 +11,7 @@ body {
   overflow-x: hidden;
   background-color: #121212;
   color: white;
+  -webkit-font-smoothing: antialiased;
 }
 
 .section {
@@ -50,6 +51,7 @@ body {
   z-index: 10;
   pointer-events: none;
   filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.6));
+  will-change: transform;
 }
 
 .trail {
@@ -61,6 +63,7 @@ body {
   z-index: 1;
   width: 0;
   pointer-events: none;
+  will-change: width;
 }
 
 .value-add {
@@ -85,6 +88,7 @@ body {
   color: #111;
   opacity: 0.15;
   transition: opacity 0.1s linear;
+  will-change: opacity;
 }
 
 .value-letter.space {
@@ -93,7 +97,7 @@ body {
 
 .text-box {
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   padding: clamp(14px, 1.6vw, 24px) clamp(16px, 1.8vw, 28px);
   border-radius: 12px;
   position: absolute;
@@ -108,6 +112,7 @@ body {
   font-weight: 500;
   font-size: clamp(12px, 1.1vw, 16px);
   box-sizing: border-box;
+  will-change: opacity, transform;
 }
 
 .num-box {
@@ -148,6 +153,45 @@ body {
 .text-box.show {
   opacity: 1 !important;
   transform: translateY(0) !important;
+}
+
+.text-box.active-pulse {
+  transform: scale(1.05) translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  z-index: 8;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #444444;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 0.3s ease;
+}
+
+.scroll-arrow {
+  width: 10px;
+  height: 10px;
+  border-right: 2px solid #555555;
+  border-bottom: 2px solid #555555;
+  transform: rotate(45deg);
+  animation: bounceArrow 1.5s infinite ease-in-out;
+}
+
+@keyframes bounceArrow {
+  0%, 100% { transform: translateY(0) rotate(45deg); opacity: 0.4; }
+  50% { transform: translateY(4px) rotate(45deg); opacity: 1; }
 }
 
 /* Tablet Layout */
@@ -233,6 +277,9 @@ body {
     top: calc(50% + 55px);
     right: 10px;
     left: auto;
+  }
+  .scroll-hint {
+    bottom: 12px;
   }
 }
 
