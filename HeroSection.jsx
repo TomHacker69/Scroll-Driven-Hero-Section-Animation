@@ -4,10 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-/**
- * Scroll-Driven Hero Section Animation (React / Next.js Component)
- * ITZFIZZ Assignment Implementation
- */
+// Scroll-driven hero section animation
 export default function HeroSection() {
   const sectionRef = useRef(null);
   const trackRef = useRef(null);
@@ -52,7 +49,6 @@ export default function HeroSection() {
       });
     };
 
-    // Initial Load Animation
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     tl.fromTo(letters, 
       { opacity: 0, y: 15 },
@@ -71,7 +67,6 @@ export default function HeroSection() {
       '-=0.3'
     );
 
-    // Scroll-Driven Animation
     gsap.to(car, {
       scrollTrigger: {
         trigger: sectionRef.current,
@@ -111,7 +106,6 @@ export default function HeroSection() {
     <div ref={sectionRef} className="section">
       <div ref={trackRef} className="track">
         
-        {/* Road */}
         <div ref={roadRef} className="road">
           <img
             ref={carRef}
@@ -121,7 +115,6 @@ export default function HeroSection() {
           />
           <div ref={trailRef} className="trail" />
 
-          {/* Letter Illumination */}
           <div ref={valueAddRef} className="value-add">
             {headline.split('').map((char, index) => (
               <span
@@ -135,7 +128,6 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Metric Cards */}
         <div ref={box1Ref} className="text-box" id="box1">
           <span className="num-box">58%</span>
           <span>Increase in pick up point use</span>

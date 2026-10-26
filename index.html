@@ -5,30 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Scroll Car Animation — ITZFIZZ</title>
 
-  <!-- Prevent caching of stale versions -->
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
 
-  <!-- Google Fonts: Syne & Space Grotesk -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Syne:wght@700;800;900&display=swap" rel="stylesheet" />
 
-  <!-- GSAP & ScrollTrigger via CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
-  <!-- Stylesheet -->
   <link rel="stylesheet" href="style.css?v=1.4" />
 </head>
 <body>
 
-  <!-- Scroll Section (Scroll-Driven Track) -->
+  <!-- Hero Track Section -->
   <div class="section" id="hero-section">
     <div class="track" id="track">
       
-      <!-- Highway Track -->
       <div class="road" id="road">
         <img
           src="car.png"
@@ -38,7 +33,6 @@
         />
         <div class="trail" id="trail"></div>
 
-        <!-- Headline Typography (Illuminated by Car) -->
         <div class="value-add" id="valueText">
           <span class="value-letter">W</span>
           <span class="value-letter">E</span>
@@ -58,7 +52,6 @@
         </div>
       </div>
 
-      <!-- Floating Impact Metric Cards -->
       <div class="text-box" id="box1" style="top: 8%; right: 32%;">
         <span class="num-box">58%</span>
         <span>Increase in pick up point use</span>
@@ -82,7 +75,6 @@
     </div>
   </div>
 
-  <!-- Animation Logic -->
   <script src="app.js?v=1.2"></script>
 </body>
 </html>

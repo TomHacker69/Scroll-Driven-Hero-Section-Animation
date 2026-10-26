@@ -1,3 +1,5 @@
+/* Scroll-Driven Hero Animation */
+
 * {
   margin: 0;
   padding: 0;
@@ -147,7 +149,6 @@ body {
   transform: translateY(0) !important;
 }
 
-/* Tablet & Mobile Responsiveness */
 @media (max-width: 1024px) {
   .road {
     height: 170px;

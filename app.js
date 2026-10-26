@@ -1,14 +1,7 @@
-/**
- * Scroll-Driven Hero Section Animation
- * ITZFIZZ Assignment Implementation
- * Powered by GSAP & ScrollTrigger
- */
-
 (function () {
   'use strict';
 
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-    console.error('GSAP or ScrollTrigger not loaded');
     return;
   }
 
@@ -43,17 +36,14 @@
     });
   }
 
-  // 1. Initial Load Animation (Requirement #2)
   function playInitialLoadAnimation() {
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-    // Headline letters staggered entrance
     tl.fromTo(letters, 
       { opacity: 0, y: 15 },
       { opacity: 0.15, y: 0, stagger: 0.04, duration: 0.6 }
     );
 
-    // Initial car entrance
     tl.from(car, {
       x: -100,
       opacity: 0,
@@ -62,7 +52,6 @@
       onComplete: calculateDimensions
     }, '-=0.4');
 
-    // Statistics animate in one by one with a subtle delay
     tl.fromTo(boxes,
       { opacity: 0, y: 25 },
       { opacity: 1, y: 0, stagger: 0.15, duration: 0.6, ease: 'back.out(1.1)' },
@@ -70,11 +59,10 @@
     );
   }
 
-  // 2. Scroll-Based Animation (Core Feature - Requirement #3)
+  // Scroll-driven car motion and letter illumination
   function initScrollAnimation() {
     calculateDimensions();
 
-    // Car drives across the road tied to scroll
     gsap.to(car, {
       scrollTrigger: {
         trigger: '.section',
@@ -89,7 +77,6 @@
         const carX = gsap.getProperty(car, 'x') || 0;
         const carFront = carX + (carWidth * 0.6);
 
-        // Illuminates letters as car passes them
         letters.forEach((letter, i) => {
           if (carFront >= letterPositions[i]) {
             letter.style.opacity = '1';
@@ -98,12 +85,10 @@
           }
         });
 
-        // Expands green trail directly behind car
         gsap.set(trail, { width: carX + (carWidth * 0.3) });
       },
     });
 
-    // Box 1 highlight on scroll
     gsap.to(box1, {
       scrollTrigger: {
         trigger: '.section',
@@ -115,7 +100,6 @@
       scale: 1.05,
     });
 
-    // Box 2 highlight on scroll
     gsap.to(box2, {
       scrollTrigger: {
         trigger: '.section',
@@ -127,7 +111,6 @@
       scale: 1.05,
     });
 
-    // Box 3 highlight on scroll
     gsap.to(box3, {
       scrollTrigger: {
         trigger: '.section',
@@ -139,7 +122,6 @@
       scale: 1.05,
     });
 
-    // Box 4 highlight on scroll
     gsap.to(box4, {
       scrollTrigger: {
         trigger: '.section',
@@ -152,13 +134,11 @@
     });
   }
 
-  // Handle Resize
   window.addEventListener('resize', () => {
     calculateDimensions();
     ScrollTrigger.refresh();
   });
 
-  // Run on load
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
       playInitialLoadAnimation();
