@@ -3,10 +3,6 @@
 [![GitHub Pages](https://img.shields.io/badge/Deployment-GitHub%20Pages-brightgreen?logo=github)](https://tomhacker69.github.io/Scroll-Driven-Hero-Section-Animation/)
 [![GSAP 3](https://img.shields.io/badge/Animation-GSAP%203%20%2B%20ScrollTrigger-88CE02?logo=greensock)](https://greensock.com/gsap/)
 
-Scroll-driven hero section animation inspired by the reference demo ([https://paraschaturvedi.github.io/car-scroll-animation](https://paraschaturvedi.github.io/car-scroll-animation)).
-
----
-
 ## Functional Requirements Implemented
 
 1. **Hero Section Layout:**
