@@ -74,6 +74,7 @@ export default function HeroSection() {
         end: 'bottom top',
         scrub: 1,
         pin: trackRef.current,
+        invalidateOnRefresh: true,
       },
       x: () => endX,
       ease: 'none',
@@ -90,14 +91,20 @@ export default function HeroSection() {
       },
     });
 
+    let resizeTimer;
     const handleResize = () => {
-      calculate();
-      ScrollTrigger.refresh();
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => {
+        calculate();
+        ScrollTrigger.refresh();
+      }, 100);
     };
     window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
 
     return () => {
       window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
       ScrollTrigger.getAll().forEach((st) => st.kill());
     };
   }, []);

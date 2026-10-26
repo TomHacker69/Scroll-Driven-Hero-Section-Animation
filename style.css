@@ -34,7 +34,7 @@ body {
 
 .road {
   width: 100vw;
-  height: 200px;
+  height: clamp(140px, 20vh, 200px);
   background-color: #1e1e1e;
   position: relative;
   overflow: hidden;
@@ -43,7 +43,7 @@ body {
 }
 
 .car {
-  height: 200px;
+  height: clamp(140px, 20vh, 200px);
   position: absolute;
   top: 0;
   left: 0;
@@ -53,7 +53,7 @@ body {
 }
 
 .trail {
-  height: 200px;
+  height: clamp(140px, 20vh, 200px);
   background: #45db7d;
   position: absolute;
   top: 0;
@@ -69,16 +69,16 @@ body {
   transform: translateY(-50%);
   left: 3%;
   font-family: 'Syne', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: clamp(2rem, 3.8vw, 4.4rem);
+  font-size: clamp(1.6rem, 3.2vw, 3.8rem);
   font-weight: 800;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
   z-index: 5;
   display: flex;
-  gap: clamp(0.15rem, 0.35vw, 0.45rem);
+  gap: clamp(0.12rem, 0.3vw, 0.4rem);
   pointer-events: none;
   user-select: none;
   white-space: nowrap;
-  max-width: 65vw;
+  max-width: 55vw;
 }
 
 .value-letter {
@@ -88,30 +88,31 @@ body {
 }
 
 .value-letter.space {
-  width: clamp(0.6rem, 1.2vw, 1.8rem);
+  width: clamp(0.5rem, 1vw, 1.5rem);
 }
 
 .text-box {
   opacity: 0;
   transition: opacity 0.4s ease, transform 0.4s ease;
-  padding: 24px 28px;
+  padding: clamp(14px, 1.6vw, 24px) clamp(16px, 1.8vw, 28px);
   border-radius: 12px;
-  margin: 1rem;
+  margin: 0.5rem;
   position: absolute;
   z-index: 5;
   display: flex;
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  gap: 6px;
-  max-width: 290px;
+  gap: 4px;
+  max-width: clamp(180px, 20vw, 290px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
   font-weight: 500;
+  font-size: clamp(12px, 1.1vw, 16px);
 }
 
 .num-box {
   font-family: 'Syne', sans-serif;
-  font-size: 54px;
+  font-size: clamp(32px, 3.8vw, 54px);
   font-weight: 800;
   line-height: 1;
 }
@@ -134,14 +135,14 @@ body {
   background: #333333;
   color: #ffffff;
   top: 8%;
-  right: 10%;
+  right: 8%;
 }
 
 #box4 {
   background: #fa7328;
   color: #111;
   bottom: 8%;
-  right: 12%;
+  right: 10%;
 }
 
 .text-box.show {
@@ -151,44 +152,89 @@ body {
 
 @media (max-width: 1024px) {
   .road {
-    height: 170px;
+    height: 160px;
   }
   .car {
-    height: 170px;
+    height: 160px;
   }
   .trail {
-    height: 170px;
+    height: 160px;
+  }
+  .value-add {
+    font-size: clamp(1.3rem, 3.2vw, 2.2rem);
+    max-width: 52vw;
   }
   .num-box {
-    font-size: 44px;
+    font-size: 40px;
   }
   .text-box {
-    padding: 16px 20px;
-    max-width: 230px;
-    font-size: 14px;
+    padding: 14px 18px;
+    max-width: 210px;
+    font-size: 13px;
   }
+  #box1 { top: 6%; right: 35%; }
+  #box2 { bottom: 6%; right: 35%; }
+  #box3 { top: 6%; right: 5%; }
+  #box4 { bottom: 6%; right: 5%; }
 }
 
 @media (max-width: 768px) {
   .road {
-    height: 140px;
+    height: 120px;
   }
   .car {
-    height: 140px;
+    height: 120px;
   }
   .trail {
-    height: 140px;
+    height: 120px;
+  }
+  .value-add {
+    left: 2%;
+    font-size: clamp(0.95rem, 3.6vw, 1.4rem);
+    gap: 0.15rem;
+    max-width: 50vw;
+  }
+  .value-letter.space {
+    width: 0.5rem;
   }
   .num-box {
-    font-size: 34px;
+    font-size: 28px;
   }
   .text-box {
-    padding: 12px 16px;
-    max-width: 180px;
-    font-size: 12px;
+    padding: 10px 12px;
+    max-width: calc(50% - 16px);
+    border-radius: 8px;
+    font-size: 11px;
+    margin: 0;
+    gap: 2px;
   }
-  #box1 { top: 4%; right: 4%; }
-  #box2 { bottom: 4%; right: 4%; }
-  #box3 { top: 4%; right: 4%; }
-  #box4 { bottom: 4%; right: 4%; }
+  #box1 { top: 5%; left: 4%; right: auto; }
+  #box3 { top: 5%; right: 4%; }
+  #box2 { bottom: 5%; left: 4%; right: auto; }
+  #box4 { bottom: 5%; right: 4%; }
+}
+
+@media (max-width: 480px) {
+  .road {
+    height: 100px;
+  }
+  .car {
+    height: 100px;
+  }
+  .trail {
+    height: 100px;
+  }
+  .value-add {
+    left: 2%;
+    font-size: clamp(0.8rem, 3.5vw, 1.1rem);
+    gap: 0.1rem;
+    max-width: 50vw;
+  }
+  .num-box {
+    font-size: 22px;
+  }
+  .text-box {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
 }

@@ -70,6 +70,7 @@
         end: 'bottom top',
         scrub: 1,
         pin: '.track',
+        invalidateOnRefresh: true,
       },
       x: () => endX,
       ease: 'none',
@@ -134,9 +135,20 @@
     });
   }
 
+  let resizeTimer;
   window.addEventListener('resize', () => {
-    calculateDimensions();
-    ScrollTrigger.refresh();
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      calculateDimensions();
+      ScrollTrigger.refresh();
+    }, 100);
+  });
+
+  window.addEventListener('orientationchange', () => {
+    setTimeout(() => {
+      calculateDimensions();
+      ScrollTrigger.refresh();
+    }, 200);
   });
 
   if (document.readyState === 'loading') {
