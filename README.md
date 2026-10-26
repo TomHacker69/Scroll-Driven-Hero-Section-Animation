@@ -7,13 +7,6 @@ Scroll-driven hero section animation inspired by the reference demo ([https://pa
 
 ---
 
-## Submission Deliverables
-
-- **Live Webpage:** [https://tomhacker69.github.io/Scroll-Driven-Hero-Section-Animation/](https://tomhacker69.github.io/Scroll-Driven-Hero-Section-Animation/)
-- **GitHub Repository:** [https://github.com/TomHacker69/Scroll-Driven-Hero-Section-Animation](https://github.com/TomHacker69/Scroll-Driven-Hero-Section-Animation)
-
----
-
 ## Functional Requirements Implemented
 
 1. **Hero Section Layout:**
