@@ -7,14 +7,14 @@ Scroll-driven hero section animation inspired by the reference demo ([https://pa
 
 ---
 
-## 🔗 Submission Deliverables
+## Submission Deliverables
 
 - **Live Webpage:** [https://tomhacker69.github.io/Scroll-Driven-Hero-Section-Animation/](https://tomhacker69.github.io/Scroll-Driven-Hero-Section-Animation/)
 - **GitHub Repository:** [https://github.com/TomHacker69/Scroll-Driven-Hero-Section-Animation](https://github.com/TomHacker69/Scroll-Driven-Hero-Section-Animation)
 
 ---
 
-## 🎯 Functional Requirements Implemented
+## Functional Requirements Implemented
 
 1. **Hero Section Layout:**
    - Full-screen pinned layout (`100vh`) with letter-spaced `W E L C O M E   I T Z F I Z Z` headline.
@@ -40,7 +40,7 @@ Scroll-driven hero section animation inspired by the reference demo ([https://pa
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 - **HTML5**
 - **CSS3**
@@ -50,7 +50,7 @@ Scroll-driven hero section animation inspired by the reference demo ([https://pa
 
 ---
 
-## 🚀 Local Run
+## Local Run
 
 ```bash
 # Using Python built-in server
